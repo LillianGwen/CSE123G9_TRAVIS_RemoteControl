@@ -4,3 +4,8 @@ Usage (Windows only!):
 3. cd to the folder containing the file
 4. Type ".\test_stt_tts.py -c" and a new window should pop up
 5. Start speaking. Whatever the program hears, it'll speak back to you after a small delay
+
+Common problems you may have:
+-> You don't have PocketSphinx installed ("pip install --upgrade pocketsphinx")
+->-> You don't have Microsoft Visual C++ 14.0 or above installed
+->-> You don't have swig.exe installed (https://www.dev2qa.com/how-to-install-swig-on-macos-linux-and-windows/)
