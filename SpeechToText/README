@@ -1,0 +1,6 @@
+Usage (Windows only!):
+1. Download "test_stt_tts.py"
+2. Make sure you have Python installed
+3. cd to the folder containing the file
+4. Type ".\test_stt_tts.py -c" and a new window should pop up
+5. Start speaking. Whatever the program hears, it'll speak back to you after a small delay
