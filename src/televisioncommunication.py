@@ -1,7 +1,7 @@
 #CSE123 Group 9:
 #The T.R.A.V.I.S. Project
 #Ann Sophie Abrahamsson, Nathan Banner, Lillian Gwendolyn, Katy Johnson, Aidan Martens, Heath Robinson, Kanybek Tashtankulov
-#04/03/2022
+#04/10/2022
 
 #This file handles the television communication of TRAVIS
 
@@ -11,11 +11,11 @@
 import lirc
 import lirc.exceptions
 
-from enum import Enum
+import enum
 
 #for simple command input
 #matches name with text in remote config files
-class RemoteInput(Enum):
+class RemoteInput(enum):
 	POWER = "KEY_POWER"
 	STOP = "KEY_STOP"
 	REWIND = "KEY_REWIND"
