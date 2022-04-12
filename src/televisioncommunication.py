@@ -1,7 +1,7 @@
 #CSE123 Group 9:
 #The T.R.A.V.I.S. Project
 #Ann Sophie Abrahamsson, Nathan Banner, Lillian Gwendolyn, Katy Johnson, Aidan Martens, Heath Robinson, Kanybek Tashtankulov
-#04/10/2022
+#04/12/2022
 
 #This file handles the television communication of TRAVIS
 
@@ -75,7 +75,8 @@ class RemoteInput(enum):
 	Z = "KEY_Z"
 
 #chosen remote config
-remote_style = "default"
+#closest pre-set remote to one for tv we have
+remote_style = "Samsung_AA59-00382A"
 
 #initialize client/daemon connection
 #https://lirc.readthedocs.io/en/latest/usage.html
