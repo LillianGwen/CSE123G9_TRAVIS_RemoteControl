@@ -3,9 +3,12 @@ FROM balenalib/raspberry-pi-debian:buster
 # Installations
 RUN apt-get -q update
 RUN apt-get install -yq wget gcc make
-RUN apt-get install -yq python3-dev python3-rpi.gpio 
-RUN apt-get install -yq bison libasound2-dev swig
+RUN apt-get install -yq python3-dev python3-rpi.gpio python3-pip
+RUN apt-get install -yq bison libasound2-dev swig lirc
     # && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Python installations
+RUN pip3 install lirc
 
 # Download and extract sphinx parts
 RUN mkdir -p /src/sphinx
