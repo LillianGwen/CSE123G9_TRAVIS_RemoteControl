@@ -12,7 +12,7 @@ import re
 
 
 def ProcessAudio():	
-##if(1):
+##if (1):
 	recorded_text = ap.RecordAudio()
 	
 	#STEPS
