@@ -16,9 +16,10 @@ import enum
 #find gpio mode
 gpioMode = GPIO.getmode()
 
-#if gpio mode is unset, set it to board
-if(gpioMode == GPIO.UNSET):
-	GPIO.setmode(GPIO.BOARD)
+#if gpio mode is unset, set it to BCM
+# bcm might fix issues with .BOARD
+if(gpioMode is None):
+	GPIO.setmode(GPIO.BCM)
 
 #if gpio mode is using board numbering
 #assign pins based on that numbering

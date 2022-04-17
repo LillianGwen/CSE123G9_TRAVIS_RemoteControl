@@ -8,7 +8,7 @@
 #below details information used for LIRC integration
 
 #uncomment below to enable sending outgoing ir signals on gpio 17
-dtoverlay=gpio-ir,gpio_pin=17
+dtoverlay=lirc-rpi,gpio_in_pin=18,gpio_out_pin=17
 
 #uncomment below to enable recieving incoming ir signals on gpio 18
 #dtoverlay=gpio-ir-tx,gpio_pin=18
