@@ -1,0 +1,14 @@
+#CSE123 Group 9:
+#The T.R.A.V.I.S. Project
+#Ann Sophie Abrahamsson, Nathan Banner, Lillian Gwendolyn, Katy Johnson, Aidan Martens, Heath Robinson, Kanybek Tashtankulov
+#04/16/2022
+
+#automatically run at startup
+#this file is intended to go to the /boot/ directory on a Raspberry Pi
+#below details information used for LIRC integration
+
+#uncomment below to enable sending outgoing ir signals on gpio 17
+dtoverlay=gpio-ir,gpio_pin=17
+
+#uncomment below to enable recieving incoming ir signals on gpio 18
+#dtoverlay=gpio-ir-tx,gpio_pin=18
