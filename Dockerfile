@@ -37,9 +37,9 @@ RUN ./configure >/dev/null \
     && echo "Done installing pocketsphinx"
 
 # Move LIRC config
-COPY config.txt /boot
-COPY hardware.conf /etc/lirc
-COPY lirc_options.conf /etc/lirc
+COPY config.txt /boot/
+COPY hardware.conf /etc/lirc/
+COPY lirc_options.conf /etc/lirc/
 
 # Move code into the container
 COPY /src /src
