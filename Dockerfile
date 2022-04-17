@@ -1,3 +1,9 @@
+#CSE123 Group 9:
+#The T.R.A.V.I.S. Project
+#Ann Sophie Abrahamsson, Nathan Banner, Lillian Gwendolyn, Katy Johnson, Aidan Martens, Heath Robinson, Kanybek Tashtankulov
+#04/17/2022
+
+
 FROM balenalib/raspberry-pi-debian:buster
 
 # Installations
@@ -37,9 +43,10 @@ RUN ./configure >/dev/null \
     && echo "Done installing pocketsphinx"
 
 # Move LIRC config
-COPY config.txt /boot/
-COPY hardware.conf /etc/lirc/
-COPY lirc_options.conf /etc/lirc/
+COPY /conf/config.txt /boot/
+COPY /conf/hardware.conf /etc/lirc/
+COPY /conf/lirc_options.conf /etc/lirc/
+COPY /conf/modules /etc/
 
 # Move code into the container
 COPY /src /src
@@ -49,4 +56,5 @@ WORKDIR /src
 ENV PYTHONPATH /usr/local/lib/python3.7/site-packages
 
 # This can be replaced with just starting our app once it's working
+# CMD python3 main.py || bash
 CMD bash

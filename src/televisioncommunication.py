@@ -19,7 +19,7 @@ import constants as constants
 
 #for simple command input
 #matches name with text in remote config files
-class RemoteInput(enum):
+class RemoteInput(enum.Enum):
 	POWER = "KEY_POWER"
 	#CYCLEWINDOWS is akin to input/source
 	CYCLEWINDOWS = "KEY_CYCLEWINDOWS"

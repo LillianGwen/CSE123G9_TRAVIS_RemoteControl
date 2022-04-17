@@ -1,0 +1,12 @@
+#CSE123 Group 9:
+#The T.R.A.V.I.S. Project
+#Ann Sophie Abrahamsson, Nathan Banner, Lillian Gwendolyn, Katy Johnson, Aidan Martens, Heath Robinson, Kanybek Tashtankulov
+#04/17/2022
+
+# /etc/modules: kernel modules to load at boot time.
+#
+# This file contains the names of kernel modules that should be loaded
+# at boot time, one per line. Lines beginning with "#" are ignored.
+
+lirc_dev
+lirc_rpi gpi_in_pin=18 gpio_out_pin=17
