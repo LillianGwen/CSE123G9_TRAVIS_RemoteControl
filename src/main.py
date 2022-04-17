@@ -1,7 +1,7 @@
 #CSE123 Group 9:
 #The T.R.A.V.I.S. Project
 #Ann Sophie Abrahamsson, Nathan Banner, Lillian Gwendolyn, Katy Johnson, Aidan Martens, Heath Robinson, Kanybek Tashtankulov
-#03/16/2022
+#04/16/2022
 
 #This file handles the initialization of TRAVIS
 
@@ -15,7 +15,10 @@ from traceback import print_exc
 #used for RPI GPIO pins
 import RPi.GPIO as GPIO
 
+#used for GPIO setup and assorted general constants
 import constants as constants
+
+#used for state tracking and handling
 import statemachine as SM
 
 try:
@@ -24,7 +27,7 @@ try:
 	while True:
 		#task loop
 		#runs state machine every tick
-		SM.RP_SM[SM.currState]()
+		SM.TRAVIS_SM[SM.currState]()
 		sleep(constants.SAMPLE_INTERVAL)
 
 #happens if interrupted by ctrl c on terminal

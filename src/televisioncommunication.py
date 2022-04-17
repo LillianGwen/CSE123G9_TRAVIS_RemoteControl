@@ -1,22 +1,28 @@
 #CSE123 Group 9:
 #The T.R.A.V.I.S. Project
 #Ann Sophie Abrahamsson, Nathan Banner, Lillian Gwendolyn, Katy Johnson, Aidan Martens, Heath Robinson, Kanybek Tashtankulov
-#04/12/2022
+#04/16/2022
 
 #This file handles the television communication of TRAVIS
 
 #TV Comms handled by https://www.lirc.org/
 #supported IR devices http://lirc-remotes.sourceforge.net/remotes-table.html
-
 import lirc
 import lirc.exceptions
 
+#enum not strictly required but useful for organization
+#used to handle state machine enum
 import enum
+
+#used for GPIO setup and assorted general constants
+import constants as constants
 
 #for simple command input
 #matches name with text in remote config files
 class RemoteInput(enum):
 	POWER = "KEY_POWER"
+	#CYCLEWINDOWS is akin to input/source
+	CYCLEWINDOWS = "KEY_CYCLEWINDOWS"
 	STOP = "KEY_STOP"
 	REWIND = "KEY_REWIND"
 	FASTFORWARD = "KEY_FASTFORWARD"
@@ -96,3 +102,33 @@ def setstyle(input_style:str):
 #sends to lirc daemon that handles driving the IR transceiver
 def send(key:RemoteInput):
 	return lirc_client.send_once(remote_style, key.value)
+
+#handles a send() call as a callback from a button input
+#used in statemachine for simplification
+#as GPIO callbacks only take channel as input
+def ButtonCallback(channel:int):
+
+	if(channel == constants.GPIO_BTN_POWER):
+		return send(RemoteInput.POWER)
+
+	elif(channel == constants.GPIO_BTN_INPUT):
+		return send(RemoteInput.CYCLEWINDOWS)
+	
+	elif(channel == constants.GPIO_BTN_VOL_UP):
+		return send(RemoteInput.VOLUMEUP)
+	
+	elif(channel == constants.GPIO_BTN_VOL_DOWN):
+		return send(RemoteInput.VOLUMEDOWN)
+
+	elif(channel == constants.GPIO_BTN_MUTE):
+		return send(RemoteInput.MUTE)
+	
+	elif(channel == constants.GPIO_BTN_CH_UP):
+		return send(RemoteInput.CHANNELUP)
+	
+	elif(channel == constants.GPIO_BTN_CH_DOWN):
+		return send(RemoteInput.CHANNELDOWN)
+
+	else:
+		#throw error
+		return -1
