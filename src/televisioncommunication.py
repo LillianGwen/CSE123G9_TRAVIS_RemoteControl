@@ -1,7 +1,7 @@
 #CSE123 Group 9:
 #The T.R.A.V.I.S. Project
 #Ann Sophie Abrahamsson, Nathan Banner, Lillian Gwendolyn, Katy Johnson, Aidan Martens, Heath Robinson, Kanybek Tashtankulov
-#04/16/2022
+#04/23/2022
 
 #This file handles the television communication of TRAVIS
 
@@ -98,10 +98,51 @@ def setstyle(input_style:str):
 	remote_style = input_style
 	return
 
-#send key across lirc connection
+#send key across the lirc connection
 #sends to lirc daemon that handles driving the IR transceiver
 def send(key:RemoteInput):
 	return lirc_client.send_once(remote_style, key.value)
+
+#send a channel number across the lirc connection
+#sends to lirc daemon that handles driving the IR transceiver
+def sendnums(num:int):
+
+	#turn int into list of digits https://stackoverflow.com/a/13905946
+	digits = list(map(int, str(num)))
+
+	#number of digits/size of digit list
+	numdigits = len(digits)
+
+	#for every digit send a command
+	for i in range(numdigits):
+
+		if(digits[i] == 0):
+			send(RemoteInput.ZERO)
+		elif(digits[i] == 1):
+			send(RemoteInput.ONE)
+		elif(digits[i] == 2):
+			send(RemoteInput.TWO)
+		elif(digits[i] == 3):
+			send(RemoteInput.THREE)
+		elif(digits[i] == 4):
+			send(RemoteInput.FOUR)
+		elif(digits[i] == 5):
+			send(RemoteInput.FIVE)
+		elif(digits[i] == 6):
+			send(RemoteInput.SIX)
+		elif(digits[i] == 7):
+			send(RemoteInput.SEVEN)
+		elif(digits[i] == 8):
+			send(RemoteInput.EIGHT)
+		else:
+			send(RemoteInput.NINE)
+		
+		#unsure if waiting is necessary or
+		#if it is already handled by the lirc daemon
+	
+	return
+
+
 
 #handles a send() call as a callback from a button input
 #used in statemachine for simplification
