@@ -1,7 +1,7 @@
 #CSE123 Group 9:
 #The T.R.A.V.I.S. Project
 #Ann Sophie Abrahamsson, Nathan Banner, Lillian Gwendolyn, Katy Johnson, Aidan Martens, Heath Robinson, Kanybek Tashtankulov
-#04/23/2022
+#04/24/2022
 
 #This file handles the voice integrated functions in TRAVIS
 #notably handling command integration
@@ -17,6 +17,9 @@ from io import SEEK_END
 
 #constant channel registry file name
 CHANNEL_REGISTRY_FILE_NAME = "TRAVIS_CHANNEL_REGISTRY.txt"
+#constant television remote registry file name
+#used for not repeating our initialization
+INIT_REGISTRY_FILE_NAME = "TRAVIS_INIT_REGISTRY.txt"
 
 def ProcessAudio():	
 ##if (1):
@@ -251,12 +254,17 @@ def addChannelEntry(channel_name:str, channel_num:int):
 	#open file for reading and writing, opens at beginning of file
 	#will not create file if it does not already exist,
 	#so we need to use a try catch block if it errors because of that
+	#in which case we can wrap it up very quickly
 	try:
 		channelfile = open(CHANNEL_REGISTRY_FILE_NAME, "r+")
 	except FileNotFoundError:
-		channelfile = open(CHANNEL_REGISTRY_FILE_NAME, "x")
+		channelfile = open(CHANNEL_REGISTRY_FILE_NAME, "w")
+		#append new entry
+		channelfile.write(newentry)
+
+		#close file and return
 		channelfile.close()
-		channelfile = open(CHANNEL_REGISTRY_FILE_NAME, "r+")
+		return
 
 	#memory management can be improved with mmap usage
 	#but should not be entirely necessary due to the relatively small file size
@@ -340,3 +348,26 @@ def findChannelEntry(channel_name:str) -> int:
 	#close file and return error number to indicate entry not found
 	channelfile.close()
 	return -1
+
+
+#used via TRAVIS Initialize command
+def init_TRAVIS(style:str):
+
+	#open file for writing only, opens at beginning of file
+	#will create file if it does not already exist,
+	#and otherwise will delete the entire file's contents
+	registryfile = open(INIT_REGISTRY_FILE_NAME, "w")
+	
+	#update the file with the correct remote style for future startup reference
+	registryfile.write(style)
+
+	#update TRAVIS with the correct remote style
+	tvcomm.setstyle(style)
+
+	#close file
+	registryfile.close()
+
+	#inform user of next steps and return
+	ap.SpeakText("Travis initialized to %s style television slash remote. Please try asking me some commands to see if that model works." % (style))
+
+	return
