@@ -236,6 +236,18 @@ def ProcessAudio():
 
 		return
 	
+	#check for 'Travis initialize (to) ...'
+	elif re.match('^Travis (in[a-zA-Z]+) (to )?(.+)$', recorded_text):
+
+		#get style to initialize to from recorded text
+		(extra, style) = recorded_text.rsplit(" ", 1)
+
+		#call initializing function
+		#it already handles speaking the response
+		init_TRAVIS(style)
+
+		return
+	
 	#no command heard, ignore
 	else:
 		pass
