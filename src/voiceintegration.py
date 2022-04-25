@@ -237,7 +237,7 @@ def ProcessAudio():
 		return
 	
 	#check for 'Travis initialize (to) ...'
-	elif re.match('^Travis (in[a-zA-Z]+) (to )?(.+)$', recorded_text):
+	elif re.match('^Travis (in[a-zA-Z]+) (to )?([a-zA-Z]+)$', recorded_text):
 
 		#get style to initialize to from recorded text
 		(extra, style) = recorded_text.rsplit(" ", 1)
