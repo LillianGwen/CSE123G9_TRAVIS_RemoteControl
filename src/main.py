@@ -1,7 +1,7 @@
 #CSE123 Group 9:
 #The T.R.A.V.I.S. Project
 #Ann Sophie Abrahamsson, Nathan Banner, Lillian Gwendolyn, Katy Johnson, Aidan Martens, Heath Robinson, Kanybek Tashtankulov
-#04/16/2022
+#04/24/2022
 
 #This file handles the initialization of TRAVIS
 
@@ -33,13 +33,13 @@ try:
 #happens if interrupted by ctrl c on terminal
 except KeyboardInterrupt:
 	#prints the exception and stack
-	print("exited by ctrl c keyboard interrupt exception")
+	print("Exited by ctrl c keyboard interrupt exception.")
 	print_exc()
 
-#happens if any other error occurs
+#happens if any other unhandled error occurs
 except:
 	#prints the exception and stack
-	print("exited by non keyboard exception")
+	print("Exited by non keyboard exception.")
 	print_exc()
 
 #happens if exception occurs or main somehow finishes
