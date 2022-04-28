@@ -3,18 +3,29 @@
 #Ann Sophie Abrahamsson, Nathan Banner, Lillian Gwendolyn, Katy Johnson, Aidan Martens, Heath Robinson, Kanybek Tashtankulov
 #04/17/2022
 
-
-FROM balenalib/raspberry-pi-debian:buster
+FROM balenalib/raspberrypi3-debian-python:bullseye
+ENV UDEV=yes
 
 # Installations
-RUN apt-get -q update
-RUN apt-get install -yq wget gcc make
-RUN apt-get install -yq python3-dev python3-rpi.gpio python3-pip
-RUN apt-get install -yq bison libasound2-dev swig lirc
+# RUN apt-get -q update
+# RUN apt-get install -yq wget gcc make 
+# RUN apt-get install -yq python3-rpi.gpio python3-pip
+# RUN apt-get install -yq bison libasound2-dev libsystemd-dev swig lirc lirc-compat-remotes
+    # lirc
     # && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Python installations
-RUN pip3 install lirc
+RUN install_packages wget build-essential\
+    python3-gi\
+    bison libasound2-dev libsystemd-dev swig\
+    lirc lirc-compat-remotes
+
+# Copy necessary config files
+COPY /conf/config.txt /boot/
+COPY /conf/modules /etc/
+COPY /conf/py_reqs.txt /src/
+
+# Run pip installatios
+RUN pip install -r /src/py_reqs.txt --src /src
 
 # Download and extract sphinx parts
 RUN mkdir -p /src/sphinx
@@ -26,27 +37,15 @@ RUN wget -q https://sourceforge.net/projects/cmusphinx/files/pocketsphinx/5preal
 
 # Compile sphinxbase
 WORKDIR /src/sphinx/sphinxbase-5prealpha
-RUN ./configure --enable-fixed >/dev/null \
-    && echo "Done configuring sphinxbase" \
-    && make >/dev/null \
-    && echo "Done making sphinxbase" \
-    && make install >/dev/null \
-    && echo "Done installing sphinxbase"
+RUN ./configure --enable-fixed \
+    && make \
+    && make install
 
 # Compile pocketsphinx
 WORKDIR /src/sphinx/pocketsphinx-5prealpha
-RUN ./configure >/dev/null \
-    && echo "Done configuring pocketsphinx" \
-    && make >/dev/null \
-    && echo "Done making pocketsphinx" \
-    && make install >/dev/null \
-    && echo "Done installing pocketsphinx"
-
-# Move LIRC config
-COPY /conf/config.txt /boot/
-COPY /conf/hardware.conf /etc/lirc/
-COPY /conf/lirc_options.conf /etc/lirc/
-COPY /conf/modules /etc/
+RUN ./configure \
+    && make \
+    && make install
 
 # Move code into the container
 COPY /src /src
@@ -55,6 +54,9 @@ WORKDIR /src
 # Needed so that sphinxbase and pocketsphinx can be recognized as installed
 ENV PYTHONPATH /usr/local/lib/python3.7/site-packages
 
+# Neeeded for lirc 
+RUN mkdir /var/run/lirc
+
 # This can be replaced with just starting our app once it's working
 # CMD python3 main.py || bash
-CMD bash
+CMD bash -c "/etc/init.d/lircd start"

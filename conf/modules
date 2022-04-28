@@ -9,4 +9,4 @@
 # at boot time, one per line. Lines beginning with "#" are ignored.
 
 lirc_dev
-lirc_rpi gpi_in_pin=18 gpio_out_pin=17
+gpio-ir-tx gpio_pin=17
