@@ -14,15 +14,18 @@ ENV UDEV=yes
     # lirc
     # && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+
 RUN install_packages wget build-essential\
     python3-gi\
     bison libasound2-dev libsystemd-dev swig\
-    lirc lirc-compat-remotes
+    lirc lirc-compat-remotes\
+    espeak
 
 # Copy necessary config files
 COPY /conf/config.txt /boot/
 COPY /conf/modules /etc/
 COPY /conf/py_reqs.txt /src/
+# COPY aa59-00741a.lircd.conf /etc/lirc/lircd.conf.d
 
 # Run pip installatios
 RUN pip install -r /src/py_reqs.txt --src /src
@@ -47,6 +50,13 @@ RUN ./configure \
     && make \
     && make install
 
+RUN mkdir -p /src/portaudio
+WORKDIR /src/portaudio
+RUN wget -q http://files.portaudio.com/archives/pa_stable_v190700_20210406.tgz -O - \
+   | tar -xz
+   
+
+
 # Move code into the container
 COPY /src /src
 WORKDIR /src
@@ -59,4 +69,5 @@ RUN mkdir /var/run/lirc
 
 # This can be replaced with just starting our app once it's working
 # CMD python3 main.py || bash
-CMD bash -c "/etc/init.d/lircd start"
+#CMD bash -c "/etc/init.d/lircd start"
+CMD bash

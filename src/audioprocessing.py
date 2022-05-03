@@ -23,18 +23,18 @@ import speech_recognition as sr
 import pyttsx3
 
 #used for organizing speech recognition styles for cleaner code
-import enum
+from enum import Enum
 
 #init tts engine
 #use espeak driver for generic platform usage
 #AKA useage on a Raspberry Pi
 #TODO: look into custom drivers?
 #Second flag is to disable debug output
-engine = pyttsx3.init("espeak", False)
+engine = pyttsx3.init("espeak", True)
 
 #enum class for voice engine used -
 #sphinx is default
-class AudioRecognitionStyle(enum):
+class AudioRecognitionStyle(Enum):
 	#sphinx is less accurate and more power-intensive
 	#but does not require any wireless connection
 	SPHINX = "Sphinx"

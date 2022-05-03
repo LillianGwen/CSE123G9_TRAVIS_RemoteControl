@@ -15,10 +15,10 @@ import constants as constants
 import televisioncommunication as TVCOMM
 
 #used for voice command handling
-import voiceintegration as voice
+#import voiceintegration as voice
 
 #used for text to speech
-import audioprocessing as ap
+#import audioprocessing as ap
 
 #enum for state
 currState = constants.TRAVIS_STATE.INIT
@@ -35,17 +35,17 @@ def RunState_INIT():
 
 	#find if we already have the remote type
 	#or if we need to gather it
-	try:
-		registryfile = open(voice.CHANNEL_REGISTRY_FILE_NAME, "r")
-		TVCOMM.setstyle(registryfile.readline)
+	#try:
+	#	registryfile = open(voice.CHANNEL_REGISTRY_FILE_NAME, "r")
+	#	TVCOMM.setstyle(registryfile.readline)
 	
 	#if we error, it means we need to gather the remote type
 	#so we try to speak and process audio until they say the right command
 	#as this method will be repeatedly called from main
-	except FileNotFoundError:
-		ap.SpeakText("Hello, I am Travis, your digital television remote assistant. To set me up, please say, Travis initialize, followed by the manufacturer of your remote or television.")
-		voice.ProcessAudio()
-		return
+	#except FileNotFoundError:
+	#	ap.SpeakText("Hello, I am Travis, your digital television remote assistant. To set me up, please say, Travis initialize, followed by the manufacturer of your remote or television.")
+	#	voice.ProcessAudio()
+	#	return
 
 	#when init finished:
 	#add event detection and callbacks for all button events
@@ -92,7 +92,7 @@ def RunState_ACTIVE():
 
 	#handle already initialized events
 	#and handle voice commands
-	voice.ProcessAudio()
+	#voice.ProcessAudio()
 
 	#if travis button is disabled then handle that as well
 	#and as such, move to idle state
