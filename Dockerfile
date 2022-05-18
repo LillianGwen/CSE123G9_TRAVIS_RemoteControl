@@ -1,7 +1,7 @@
 #CSE123 Group 9:
 #The T.R.A.V.I.S. Project
 #Ann Sophie Abrahamsson, Nathan Banner, Lillian Gwendolyn, Katy Johnson, Aidan Martens, Heath Robinson, Kanybek Tashtankulov
-#04/17/2022
+#05/17/2022
 
 FROM balenalib/raspberrypi3-64-debian-python:3.7-bookworm
 ENV UDEV=1
@@ -41,6 +41,9 @@ RUN ./configure \
     && make \
     && make install
 
+# Needed so that sphinxbase and pocketsphinx can be recognized as installed
+ENV PYTHONPATH /usr/local/lib/python3.7/site-packages
+
 # Compile and install portaudio
 WORKDIR /src
 RUN wget -q http://files.portaudio.com/archives/pa_stable_v190700_20210406.tgz -O - \
@@ -56,14 +59,5 @@ RUN rm -rf sphinx portaudio
 
 # Move code into the container
 COPY /src /src
-# WORKDIR /src
 
-# Needed so that sphinxbase and pocketsphinx can be recognized as installed
-ENV PYTHONPATH /usr/local/lib/python3.7/site-packages
-
-# Neeeded for lirc 
-# RUN mkdir /var/run/lirc
-
-# This can be replaced with just starting our app once it's working
-# CMD ["lircd", "--device", "/dev/lircd", "&", "python3", "main.py"]
 CMD lircd --driver=default --device=/dev/lirc0 && python3 main.py
