@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  main:
+    build: .
+    privileged: true
+    restart: always
+    devices:
+      - '/dev/lirc0:/dev/lirc0'
+      - '/dev/lirc1:/dev/lirc1'
+      - '/dev/lircd:/dev/lircd'
